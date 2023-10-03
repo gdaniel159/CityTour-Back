@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuario', function (Blueprint $table) {
+        Schema::create('destino', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->nullable();
-            $table->string('username')->nullable();
-            $table->string('password')->nullable();
-            $table->foreignId('tipo_usuario_id')->nullable()->references('id')->on('tipo_usuario');
+            $table->integer('estado')->nullable();
             $table->timestamps();
+
+            $table->foreignId('region_id')->nullable()->references('id')->on('regiones');
+
         });
     }
 
@@ -26,8 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuario');
+        Schema::dropIfExists('destino');
     }
-
-    
 };
