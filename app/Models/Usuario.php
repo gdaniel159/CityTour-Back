@@ -26,7 +26,7 @@ class Usuario extends Model
     // Primary Key
     protected $primaryKey = 'id';
 
-    // Definicio de la relacion de uno a muchos (inversa)
+    // Definicio de la relacion de muchos a uno (inversa, solo si tiene id fk)
     public function tipo_usuario(){
         return $this->belongsTo(TipoUsuario::class);
     }
