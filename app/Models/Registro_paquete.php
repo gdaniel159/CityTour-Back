@@ -12,7 +12,6 @@ class Registro_paquete extends Model
     protected $fillable = array(
         'detalle_pack_id',
         'cliente_id'
-
     );
 
     protected $hidden = [

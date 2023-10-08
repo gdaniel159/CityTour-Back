@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('duracion')->nullable();
             $table->integer('estado')->nullable();
 
-            $table->foreignId('destino_i')->nullable()->references('id')->on('destino');
+            $table->foreignId('destino_id')->nullable()->references('id')->on('destino');
             $table->timestamps();
         });
     }

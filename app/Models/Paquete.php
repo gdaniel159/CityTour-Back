@@ -14,7 +14,7 @@ class Paquete extends Model
         'precio',
         'duracion',
         'estado',
-        'destino_i'
+        'destino_id'
     );
 
     protected $hidden = [
