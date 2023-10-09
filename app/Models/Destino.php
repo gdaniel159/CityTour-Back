@@ -2,30 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Destino extends Model
 {
     protected $table = 'destino';
 
-    protected $fillable = array(
+    protected $fillable = [
         'nombre',
         'estado',
         'region_id'
-    );
+    ];
 
-    protected $hiden = [
-        'create_at', 'update_at'
+    protected $hidden = [
+        'created_at', 'updated_at'
     ];
 
     protected $primaryKey = 'id';
 
-    public function paquete(){
-        return $this->hasMany(Destino::class);
+    public function paquetes()
+    {
+        return $this->hasMany(Paquete::class);
     }
 
-    public function regiones(){
-        return $this->belongsTo(Regiones::class);
+    public function regiones()
+    {
+        return $this->belongsTo(Regiones::class, 'region_id');
     }
 }

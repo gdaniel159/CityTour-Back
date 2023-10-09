@@ -2,33 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Usuario extends Model
 {
-    
-    // Tabla
     protected $table = 'usuario';
         
-    // Campos a utilizar
-    protected $fillable = array(
+    protected $fillable = [
         'nombre',
         'username',
         'tipo_usuario_id'
-    );
-
-    // Campos que no podran ser accedidos
-    protected $hidden = [
-        'created_at','updated_at','password'
     ];
 
-    // Primary Key
+    protected $hidden = [
+        'created_at', 'updated_at', 'password'
+    ];
+
     protected $primaryKey = 'id';
 
-    // Definicio de la relacion de muchos a uno (inversa, solo si tiene id fk)
-    public function tipo_usuario(){
-        return $this->belongsTo(TipoUsuario::class);
+    public function tipo_usuario()
+    {
+        return $this->belongsTo(TipoUsuario::class, 'tipo_usuario_id');
     }
-
 }

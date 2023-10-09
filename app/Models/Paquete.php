@@ -2,33 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Paquete extends Model
 {
     protected $table = 'paquete';
 
-    protected $fillable = array(
+    protected $fillable = [
         'descripcion',
         'precio',
         'duracion',
         'estado',
         'destino_id'
-    );
-
-    protected $hidden = [
-        'create_ad', 'update_at'
     ];
 
-    protected $primaryKey='id';
+    protected $hidden = [
+        'created_at', 'updated_at'
+    ];
 
-    public function destino(){
-        return $this ->belongsTo(Destino::class);
+    protected $primaryKey = 'id';
+
+    public function destino()
+    {
+        return $this->belongsTo(Destino::class, 'destino_id');
     }
 
-    public function detalle_paquete(){
+    public function detalle_paquete()
+    {
         return $this->hasMany(Detalle_paquete::class);
     }
-
 }
