@@ -1,9 +1,7 @@
 <?php
-
 use App\Http\Controllers\TipoUsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 
 // Definicion de rutas
 
