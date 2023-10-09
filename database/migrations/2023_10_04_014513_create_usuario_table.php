@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nombre')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();
+            $table->string('correo')->nullable();
             $table->foreignId('tipo_usuario_id')->nullable()->references('id')->on('tipo_usuario');
             $table->timestamps();
         });

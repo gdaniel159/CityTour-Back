@@ -1,5 +1,13 @@
 <?php
+
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\DestinoController;
+use App\Http\Controllers\Detalle_paqueteController;
+use App\Http\Controllers\PaqueteController;
+use App\Http\Controllers\RegionesController;
+use App\Http\Controllers\Registro_paqueteController;
 use App\Http\Controllers\TipoUsuarioController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +27,7 @@ Route::delete('cliente/delete/{id}', [ClienteController::class, 'delete']);
 
 // RUTA PARA LOS DESTINOS.
 Route::get('destino/get', [DestinoController::class, 'get']);
-Route::post('destino/create', [DestinoController::class, 'store']);
+Route::post('destino/create/{idRegion}', [DestinoController::class, 'store']);
 Route::put('destino/update/{id}', [DestinoController::class, 'update']);
 Route::delete('destino/delete/{id}', [DestinoController::class, 'delete']);
 

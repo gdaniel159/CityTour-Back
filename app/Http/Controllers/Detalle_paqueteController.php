@@ -11,7 +11,7 @@ class Detalle_paqueteController extends Controller
     // GET - Obtenemos todos los registros de la base de datos
     public function get()
     {
-        $detalle_paquetes = Detalle_paquete::all();
+        $detalle_paquetes = Detalle_paquete::with('paquete')->get();
         return response()->json($detalle_paquetes);
     }
 
@@ -21,13 +21,17 @@ class Detalle_paqueteController extends Controller
         DB::beginTransaction();
 
         try {
+
             $detalle_paquete = Detalle_paquete::create($request->all());
             DB::commit();
 
             return response()->json(['message' => 'Detalle de paquete creado correctamente'], 200);
+
         } catch (\Exception $e) {
+
             DB::rollback();
             return response()->json(["error" => "Error al crear el detalle de paquete: " . $e->getMessage()], 500);
+        
         }
     }
 

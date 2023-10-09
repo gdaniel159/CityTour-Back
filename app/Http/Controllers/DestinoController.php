@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Destino;
+use App\Models\Regiones;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,17 +12,29 @@ class DestinoController extends Controller
     // GET - Obtenemos todos los registros de la base de datos
     public function get()
     {
-        $destinos = Destino::all();
+        $destinos = Destino::with('regiones')->get();
         return response()->json($destinos);
     }
 
     // POST - Guardar datos
-    public function store(Request $request)
+    public function store(Request $request,$idRegion)
     {
         DB::beginTransaction();
 
         try {
-            $destino = Destino::create($request->all());
+
+            $estado = Regiones::where('id',$idRegion)->first();
+            
+            if(!$estado){
+                return response()->json(['message'=>"La region no existe en la base de datos"]);
+            }
+
+            $destino = Destino::create([
+                'nombre' => $request->nombre,
+                'estado' => $request->estado,
+                'region_id' => $estado->id
+            ]);
+
             DB::commit();
 
             return response()->json(['message' => 'Destino creado correctamente'], 200);

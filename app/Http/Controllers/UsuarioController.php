@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EnviarContraseña;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UsuarioController extends Controller
 {
     // GET - Obtenemos todos los registros de la base de datos
     public function get()
     {
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::with('tipo_usuario')->get();
         return response()->json($usuarios);
     }
 
@@ -21,10 +24,24 @@ class UsuarioController extends Controller
         DB::beginTransaction();
 
         try {
-            $usuario = Usuario::create($request->all());
+            // Genera una contraseña aleatoria de 10 caracteres
+            $password = Str::random(10);
+
+            // Crea el usuario y asigna la contraseña aleatoria
+            $usuario = Usuario::create([
+                'nombre' => $request->input('nombre'),
+                'username' => $request->input('username'),
+                'tipo_usuario_id' => $request->input('tipo_usuario_id'),
+                'correo' => $request->input('correo'),
+                'password' => bcrypt($password), // Hashea la contraseña
+            ]);
+
+            // Envía la contraseña por correo electrónico
+            Mail::to($request->input('correo'))->send(new EnviarContraseña($password));
+
             DB::commit();
 
-            return response()->json(['message' => 'Usuario creado correctamente'], 200);
+            return response()->json(['message' => 'Usuario creado correctamente', 'password' => $password], 200);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(["error" => "Error al crear el usuario: " . $e->getMessage()], 500);

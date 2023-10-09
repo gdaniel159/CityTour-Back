@@ -11,11 +11,13 @@ class Usuario extends Model
     protected $fillable = [
         'nombre',
         'username',
-        'tipo_usuario_id'
+        'tipo_usuario_id',
+        'password',
+        'correo'
     ];
 
     protected $hidden = [
-        'created_at', 'updated_at', 'password'
+        'created_at', 'updated_at', 
     ];
 
     protected $primaryKey = 'id';

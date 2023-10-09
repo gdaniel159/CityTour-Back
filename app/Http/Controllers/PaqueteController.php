@@ -11,7 +11,7 @@ class PaqueteController extends Controller
     // GET - Obtenemos todos los registros de la base de datos
     public function get()
     {
-        $paquetes = Paquete::all();
+        $paquetes = Paquete::with('destino')->get();
         return response()->json($paquetes);
     }
 

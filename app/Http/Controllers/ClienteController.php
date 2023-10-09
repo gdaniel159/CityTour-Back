@@ -23,7 +23,6 @@ class ClienteController extends Controller
         try {
             $cliente = Cliente::create($request->all());
             DB::commit();
-
             return response()->json(['message' => 'Cliente creado correctamente'], 200);
         } catch (\Exception $e) {
             DB::rollback();
