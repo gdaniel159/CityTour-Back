@@ -93,4 +93,35 @@ class UsuarioController extends Controller
             return response()->json(["error" => "Error al eliminar el usuario: " . $e->getMessage()], 500);
         }
     }
+
+    public function login(Request $request) {
+
+        // Obtener las credenciales del usuario desde la solicitud
+
+        $credentials = $request->only('correo', 'password');
+    
+        // Intentar autenticar al usuario
+
+        if (auth()->attempt($credentials)) {
+
+            // Autenticación exitosa
+
+            $user = auth()->user();
+
+            if ($user) {
+                $verification_code = $user->verified ? 0 : 1;
+            }
+
+            // Puedes realizar acciones adicionales aquí, como generar un token de acceso, si estás construyendo una API.
+    
+            return response()->json(['message' => 'Inicio de sesión exitoso', 'user' => $user, 'verification_code' => $verification_code], 200);
+
+        } else {
+
+            // Autenticación fallida
+
+            return response()->json(['error' => 'Credenciales incorrectas'], 401);
+
+        }
+    }
 }

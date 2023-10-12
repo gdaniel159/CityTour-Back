@@ -11,7 +11,7 @@ class Registro_paqueteController extends Controller
     // GET - Obtenemos todos los registros de la base de datos
     public function get()
     {
-        $registros_paquete = Registro_paquete::all();
+        $registros_paquete = Registro_paquete::with('detalle_paquete', 'cliente', 'detalle_paquete.paquete')->get();
         return response()->json($registros_paquete);
     }
 

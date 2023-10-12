@@ -61,6 +61,10 @@ Route::post('registro_paquete/create', [Registro_paqueteController::class, 'stor
 Route::put('registro_paquete/update/{id}', [Registro_paqueteController::class, 'update']);
 Route::delete('registro_paquete/delete/{id}', [Registro_paqueteController::class, 'delete']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// RUTA LOGIN
+
+Route::post('/login', [UsuarioController::class,'login']);
+
+Route::middleware(['auth:api'])->group(function () {
+    
 });
