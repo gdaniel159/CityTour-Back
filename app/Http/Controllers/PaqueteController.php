@@ -15,6 +15,13 @@ class PaqueteController extends Controller
         return response()->json($paquetes);
     }
 
+    // GET - Obtener por id
+
+    public function getById($id){
+        $paquete = Paquete::where('id', $id)->with('destino')->get();
+        return response()->json($paquete);
+    }
+
     // POST - Guardar datos
     public function store(Request $request)
     {

@@ -25,7 +25,7 @@ class Detalle_paqueteController extends Controller
             $detalle_paquete = Detalle_paquete::create($request->all());
             DB::commit();
 
-            return response()->json(['message' => 'Detalle de paquete creado correctamente'], 200);
+            return response()->json(['message' => 'Detalle de paquete creado correctamente', 'detalle_paquete_id'=>$detalle_paquete->id], 200);
 
         } catch (\Exception $e) {
 

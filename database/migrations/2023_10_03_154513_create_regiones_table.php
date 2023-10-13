@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('regiones', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->nullable();
+            $table->string('imageUrl')->nullable();
             $table->integer('estado')->nullable();
             $table->timestamps();
         });

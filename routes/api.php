@@ -30,6 +30,7 @@ Route::get('destino/get', [DestinoController::class, 'get']);
 Route::post('destino/create/{idRegion}', [DestinoController::class, 'store']);
 Route::put('destino/update/{id}', [DestinoController::class, 'update']);
 Route::delete('destino/delete/{id}', [DestinoController::class, 'delete']);
+Route::post('destinos/uploadImage/{id}',[DestinoController::class, 'uploadImage']);
 
 //RUTA PARA LOS DETALLE PAQUETES
 Route::get('detalle_paquete/get', [Detalle_paqueteController::class, 'get']);
@@ -39,6 +40,7 @@ Route::delete('detalle_paquete/delete/{id}', [Detalle_paqueteController::class, 
 
 //RUTA PARA LOS PAQUETES
 Route::get('paquete/get', [PaqueteController::class, 'get']);
+Route::get('paquete/get/{id}', [PaqueteController::class, 'getById']);
 Route::post('paquete/create', [PaqueteController::class, 'store']);
 Route::put('paquete/update/{id}', [PaqueteController::class, 'update']);
 Route::delete('paquete/delete/{id}', [PaqueteController::class, 'delete']);
@@ -48,6 +50,7 @@ Route::get('regiones/get', [RegionesController::class, 'get']);
 Route::post('regiones/create', [RegionesController::class, 'store']);
 Route::put('regiones/update/{id}', [RegionesController::class, 'update']);
 Route::delete('regiones/delete/{id}', [RegionesController::class, 'delete']);
+Route::post('regiones/uploadImage/{id}',[RegionesController::class, 'uploadImage']);
 
 //RUTA PARA LOS USUARIOS
 Route::get('usuario/get', [UsuarioController::class, 'get']);

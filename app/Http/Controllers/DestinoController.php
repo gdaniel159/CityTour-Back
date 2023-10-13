@@ -17,16 +17,16 @@ class DestinoController extends Controller
     }
 
     // POST - Guardar datos
-    public function store(Request $request,$idRegion)
+    public function store(Request $request, $idRegion)
     {
         DB::beginTransaction();
 
         try {
 
-            $estado = Regiones::where('id',$idRegion)->first();
-            
-            if(!$estado){
-                return response()->json(['message'=>"La region no existe en la base de datos"]);
+            $estado = Regiones::where('id', $idRegion)->first();
+
+            if (!$estado) {
+                return response()->json(['message' => "La region no existe en la base de datos"]);
             }
 
             $destino = Destino::create([
@@ -88,5 +88,27 @@ class DestinoController extends Controller
             DB::rollback();
             return response()->json(["error" => "Error al eliminar el destino: " . $e->getMessage()], 500);
         }
+    }
+
+    public function uploadImage(Request $request, $id)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $destino = Destino::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('destinos'), $imageName);
+
+            $destino->imageUrl = 'destinos/' . $imageName;
+            $destino->save();
+
+            return response()->json(["message"=>"Imagen cargada exitosamente"]);
+        }
+
+        return response()->json(["error","Imagen no se cargado correctamente"]);
     }
 }

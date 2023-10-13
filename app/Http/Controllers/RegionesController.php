@@ -21,10 +21,20 @@ class RegionesController extends Controller
         DB::beginTransaction();
 
         try {
+
             $region = Regiones::create($request->all());
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images'), $imageName);
+                $region->imageUrl = 'images/' . $imageName;
+            }
+
             DB::commit();
 
             return response()->json(['message' => 'Región creada correctamente'], 200);
+
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(["error" => "Error al crear la región: " . $e->getMessage()], 500);
@@ -76,4 +86,27 @@ class RegionesController extends Controller
             return response()->json(["error" => "Error al eliminar la región: " . $e->getMessage()], 500);
         }
     }
+
+    public function uploadImage(Request $request, $id)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $destino = Regiones::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('regiones'), $imageName);
+
+            $destino->imageUrl = 'regiones/' . $imageName;
+            $destino->save();
+
+            return response()->json(["message","Imagen cargada exitosamente"]);
+        }
+
+        return response()->json(["error","Imagen no se cargado correctamente"]);
+    }
+
 }

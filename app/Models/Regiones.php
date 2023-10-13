@@ -10,6 +10,7 @@ class Regiones extends Model
 
     protected $fillable = [
         'nombre',
+        'imageUrl',
         'estado'
     ];
 
